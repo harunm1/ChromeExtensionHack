@@ -1,0 +1,11 @@
+#first {
+  position: absolute;
+  top: 20%;
+  left: 20%;
+}
+
+#second {
+  position: absolute;
+  top: 30%;
+  left: 40%;
+}
