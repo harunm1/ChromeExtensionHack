@@ -4,20 +4,39 @@ document.addEventListener("DOMContentLoaded", () => {
   });
   console.log("hello world");
 
-  const ctx = document.getElementById("myChart").getContext("2d");
+  var ctx = document.getElementById("myChart").getContext("2d");
+  // And for a doughnut chart
+
+  const websiteData = [
+    {
+      domain: "google.com",
+      time: 2365362623,
+      limit: 325362623632622,
+    },
+    {
+      domain: "linkedin.com",
+      time: 3532623236,
+      limit: 353252335,
+    },
+  ];
+  const websiteUrl = [];
+  const websiteTime = [];
+  for (let i = 0; i < websiteData.length; i++) {
+    websiteUrl[i] = websiteData[i].domain;
+    websiteTime[i] = websiteData[i].time;
+  }
   const data = {
     datasets: [
       {
-        data: [10, 20, 30],
+        data: websiteTime,
       },
     ],
-
     // These labels appear in the legend and in the tooltips when hovering different arcs
-    labels: ["Red", "Yellow", "Blue"],
+    labels: websiteUrl,
+    color: ["red", "green", "yellow"],
   };
-  const myDoughnutChart = new Chart(ctx, {
+  var myDoughnutChart = new Chart(ctx, {
     type: "doughnut",
     data: data,
-    options: options,
   });
 });
