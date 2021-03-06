@@ -1,0 +1,36 @@
+{
+    "manifest_version": 2,
+    "name": "Productivity Tracker",
+    "version": "1.0",
+    "description": "This extension tracks the time you spend on certain sites",
+    "icons": {
+        "16": "icons/icon16.png",
+        "48": "icons/icon48.png",
+        "128": "icons/icon128/png"
+    },
+    "browser_action": {
+        "default_popup": "popup.html",
+        "default_title": "Productivity Tracker",
+        "default_icon": "icons/icon16.png"
+    },
+    "permissions": [
+        "tabs",
+        "activeTab",
+        "storage",
+        "idle",
+        "chrome://favicon/*",
+        "webNavigation",
+        "unlimitedStorage"
+    ],
+    "optional_permissions": [
+        "https://www.youtube.com/*",
+        "https://www.netflix.com/*",
+        "https://www.messenger.com/*",
+        "https://www.facebook.com/*",
+        "https://www.instagram.com/*"
+      ],
+    "background": {
+        "scripts": ["./popup.js"]
+    }
+
+}
