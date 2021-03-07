@@ -30,8 +30,9 @@ document.addEventListener("DOMContentLoaded", () => {
     //auto generate color
 
     function hexCodeGen() {
-      let code = (Math.random() * 0xffff * 55).toString();
-      return "#" + code.slice(0, 6);
+      const randomColor = Math.floor(Math.random() * 16777215).toString(16);
+      document.body.style.backgroundColor = "#" + randomColor;
+      return "#" + randomColor;
     }
 
     function chooseColor(dataSize) {
@@ -51,7 +52,17 @@ document.addEventListener("DOMContentLoaded", () => {
         legend: {
           position: "right",
         },
+        responsive: true,
+        maintainAspectRatio: false,
       },
     });
+    const noDataMessage = document.getElementById("no-data");
+
+    if (domainLabels.length === 0) {
+      noDataMessage.innerHTML = "Start visiting websites to see data.";
+      document.getElementById("chart-container").style.display = "none";
+    } else {
+      noDataMessage.style.display = "none";
+    }
   });
 });

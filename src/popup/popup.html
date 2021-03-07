@@ -13,10 +13,7 @@
 
 
 <body style="width: 500px;height: 500px;">
-
     <h1 class="text-center">Productivity Tracker</h1>
-    <p id="domainlabels"></p>
-    <p id="domaindurations"></p>
     <div class="container">
         <div class="row">
             <div class="col-4">
@@ -39,9 +36,12 @@
 
         </div>
     </div>
+    <div class="d-flex justify-content-center mt-4">
+        <h2 id="no-data"></h2>
+    </div>
 
     <div class="d-flex justify-content-center mt-4">
-        <div class="chart-container" style="position: relative; height:400px; width:500px">
+        <div class="chart-container" id="chart-container" style="position: relative; height:400px; width:500px">
             <canvas id="pieChart"></canvas>
         </div>
     </div>

@@ -17,21 +17,23 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const colors = chooseColor(domainLabels.length);
     const data = {
+      // These labels appear in the legend and in the tooltips when hovering different arcs
+      labels: domainLabels,
       datasets: [
         {
+          label: "Time spent on Websites",
           data: domainDurations,
           backgroundColor: colors,
         },
       ],
-      // These labels appear in the legend and in the tooltips when hovering different arcs
-      labels: domainLabels,
     };
 
     //auto generate color
 
     function hexCodeGen() {
-      let code = (Math.random() * 0xffff * 55).toString();
-      return "#" + code.slice(0, 6);
+      const randomColor = Math.floor(Math.random() * 16777215).toString(16);
+      document.body.style.backgroundColor = "#" + randomColor;
+      return "#" + randomColor;
     }
 
     function chooseColor(dataSize) {
@@ -43,15 +45,23 @@ document.addEventListener("DOMContentLoaded", () => {
 
       return colorArray;
     }
+    Chart.defaults.global.defaultFontColor = "white";
 
     var myBarChart = new Chart(barChartCanvas, {
-      type: "bar",
+      type: "horizontalBar",
       data: data,
       options: {
-        legend: {
-          position: "right",
-        },
+        responsive: true,
+        maintainAspectRatio: false,
       },
     });
+    const noDataMessage = document.getElementById("no-data");
+
+    if (domainLabels.length === 0) {
+      noDataMessage.innerHTML = "Start visiting websites to see data.";
+      document.getElementById("chart-container").style.display = "none";
+    } else {
+      noDataMessage.style.display = "none";
+    }
   });
 });

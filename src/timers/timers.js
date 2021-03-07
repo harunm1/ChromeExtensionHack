@@ -10,6 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
       );
     });
   }, 1000);
+
   chrome.storage.local.get(null, function (obj) {
     Object.keys(obj).forEach((key) => {
       if (obj[key].isDomain === true && key != "null") {
@@ -31,5 +32,21 @@ document.addEventListener("DOMContentLoaded", () => {
           <td>${domainLastAccessed[i]}</td>
         </tr>`;
     }
+  });
+  const clearDataButton = document.getElementById("clear-data");
+  clearDataButton.addEventListener("click", () => {
+    chrome.runtime.sendMessage({
+      msg: "clear",
+      data: {
+        subject: "clear data",
+      },
+    });
+    chrome.storage.local.clear(function () {
+      var error = chrome.runtime.lastError;
+      if (error) {
+        console.error(error);
+      }
+      window.location.href = "../popup/popup.html";
+    });
   });
 });
