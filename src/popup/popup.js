@@ -43,7 +43,11 @@ document.addEventListener("DOMContentLoaded", () => {
     var myPieChart = new Chart(pieChartCanvas, {
       type: "doughnut",
       data: data,
-      options: {},
+      options: {
+        legend: {
+          position: "right",
+        },
+      },
     });
   });
 });
