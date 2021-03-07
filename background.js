@@ -6,6 +6,13 @@ let endTime = 0;
 
 let openTabs = [];
 let tabIdUrlMap = {};
+let browseTime = 0;
+window.setInterval(() => {
+  browseTime += 1;
+  chrome.storage.local.set({
+    browseTime: browseTime,
+  });
+}, 1000);
 
 chrome.tabs.onActivated.addListener((tab) => {
   chrome.tabs.get(tab.tabId, (currentTabInfo) => {

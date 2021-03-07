@@ -18,24 +18,26 @@ body {
 body {
   background: url(https://images.unsplash.com/photo-1488998427799-e3362cec87c3?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80)
     no-repeat;
-  background-color: transparent;
+  background-size: cover;
 }
 
 h1 {
   font-size: 50px;
-  color: #ccffff;
-  background: rgb(0, 0, 0);
-  background: rgba(0, 0, 0, 0.3);
+  color: white;
+  font-weight: bold;
+
   width: 100%;
   padding: 20px;
 }
 
 .navigation {
+  padding-top: 10px;
   background-color: white;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-radius: 5px;
-  box-shadow: 5px;
+  margin-left: 10px;
+  margin-right: 10px;
+  border-radius: 20px;
+  height: 40px;
+  box-shadow: 6px 6px 5px rgba(0, 0, 0, 0.15);
 }
 
 .pieLegend li span {
@@ -43,4 +45,12 @@ h1 {
   width: 12px;
   height: 12px;
   margin-right: 5px;
+}
+
+.table-container {
+  height: 400px;
+  overflow-y: scroll;
+  background-color: white;
+  padding: 20px;
+  border-radius: 15px;
 }

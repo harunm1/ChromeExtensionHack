@@ -1,15 +1,19 @@
 document.addEventListener("DOMContentLoaded", () => {
   const domainLabels = [];
   const domainDurations = [];
+  const domainImages = [];
+  const domainLastAccessed = [];
   chrome.storage.local.get(null, function (obj) {
     Object.keys(obj).forEach((key) => {
       if (obj[key].isDomain === true && key != "null") {
         domainLabels.push(key);
         domainDurations.push(parseInt(obj[key].duration / 60000));
+        domainImages.push(obj[key].image);
+        domainLastAccessed.push(obj[key].startTime);
       }
     });
 
-    const barChartCanvas = document.getElementById("barChart").getContext("2d");
+    const pieChartCanvas = document.getElementById("pieChart").getContext("2d");
 
     const colors = chooseColor(domainLabels.length);
     const data = {
@@ -40,9 +44,24 @@ document.addEventListener("DOMContentLoaded", () => {
       return colorArray;
     }
 
-    var myBarChart = new Chart(barChartCanvas, {
-      type: "bar",
+    var myPieChart = new Chart(pieChartCanvas, {
+      type: "doughnut",
       data: data,
+      options: {
+        legend: {
+          position: "right",
+        },
+      },
     });
+
+    for (let i = 0; i < domainLabels.length; i++) {
+      document.getElementById("table-data").innerHTML += `
+        <tr>
+          <td><img src="${domainImages[i]}" style="width: 30px;height:30px;"/></td>
+          <td>${domainLabels[i]}</td>
+          <td>${domainDurations[i]}</td>
+          <td>${domainLastAccessed[i]}</td>
+        </tr>`;
+    }
   });
 });
