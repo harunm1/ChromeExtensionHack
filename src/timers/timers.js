@@ -5,9 +5,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const domainLastAccessed = [];
   window.setInterval(() => {
     chrome.storage.local.get("browseTime", (obj) => {
-      document.getElementById("browse-time").innerHTML = JSON.stringify(
-        obj.browseTime
-      );
+      document.getElementById("browse-time").innerHTML = parseFloat(
+        obj.browseTime / 60
+      ).toFixed(2);
     });
   }, 1000);
 
