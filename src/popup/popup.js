@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
   const domainLabels = [];
   const domainDurations = [];
+
   chrome.storage.local.get(null, function (obj) {
     Object.keys(obj).forEach((key) => {
       if (obj[key].isDomain === true && key != "null") {
