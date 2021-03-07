@@ -53,15 +53,5 @@ document.addEventListener("DOMContentLoaded", () => {
         },
       },
     });
-
-    for (let i = 0; i < domainLabels.length; i++) {
-      document.getElementById("table-data").innerHTML += `
-      <tr>
-        <td><img src="${domainImages[i]}" style="width: 30px;height:30px;"/></td>
-        <td>${domainLabels[i]}</td>
-        <td>${domainDurations[i]}</td>
-        <td>${domainLastAccessed[i]}</td>
-      </tr>`;
-    }
   });
 });
