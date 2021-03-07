@@ -17,7 +17,9 @@ document.addEventListener("DOMContentLoaded", () => {
         const d = new Date(0);
         d.setUTCSeconds(obj[key].startTime);
         domainLabels.push(key);
-        domainDurations.push(parseInt(obj[key].duration / 60000));
+        domainDurations.push(
+          parseFloat(obj[key].duration / 60000).toFixed(2) + " mins"
+        );
         domainImages.push(obj[key].image);
         domainLastAccessed.push(d);
       }

@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
     Object.keys(obj).forEach((key) => {
       if (obj[key].isDomain === true && key != "null") {
         domainLabels.push(key);
-        domainDurations.push(parseInt(obj[key].duration / 60000));
+        domainDurations.push(parseFloat(obj[key].duration / 60000).toFixed(2));
         domainImages.push(obj[key].image);
         domainLastAccessed.push(obj[key].startTime);
       }
