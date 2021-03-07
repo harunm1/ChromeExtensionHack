@@ -1,0 +1,48 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="../../mystyles.css">
+    <title>Document</title>
+</head>
+
+
+<body style="width: 600px;height: 500px;">
+
+    <h1 class="text-center">Productivity Tracker</h1>
+    <p id="domainlabels"></p>
+    <p id="domaindurations"></p>
+    <div class="container">
+        <div class="row">
+            <div class="col-4">
+                <a href="../popup/popup.html">Pie Chart</a>
+            </div>
+            <div class="col-4">
+                <a href="../line-chart/line-chart.html">Line Chart</a>
+            </div>
+            <div class="col-4">
+                <a href="../timers/timers.html">Timers</a>
+            </div>
+        </div>
+    </div>
+    <div class="d-flex justify-content-center">
+        <div class="chart-container" style="position: relative; height:400px; width:500px">
+            <canvas id="pieChart"></canvas>
+        </div>
+    </div>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
+        crossorigin="anonymous"></script>
+    <script src="../../Chart.min.js"></script>
+    <script src="popup.js"></script>
+</body>
+
+</html>
