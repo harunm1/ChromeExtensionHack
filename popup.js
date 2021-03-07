@@ -1,42 +1,34 @@
 document.addEventListener("DOMContentLoaded", () => {
+  const domainLabels = [];
+  const domainDurations = [];
   chrome.storage.local.get(null, function (obj) {
-    document.getElementById("password").innerHTML = JSON.stringify(obj);
-  });
-  console.log("hello world");
+    Object.keys(obj).forEach((key) => {
+      if (obj[key].isDomain === true) {
+        domainLabels.push(key);
+        domainDurations.push(obj[key].duration);
+      }
+    });
 
-  var ctx = document.getElementById("myChart").getContext("2d");
-  // And for a doughnut chart
+    const barChartCanvas = document.getElementById("barChart").getContext("2d");
+    const pieChartCanvas = document.getElementById("pieChart").getContext("2d");
+    const data = {
+      datasets: [
+        {
+          data: domainDurations,
+        },
+      ],
+      // These labels appear in the legend and in the tooltips when hovering different arcs
+      labels: domainLabels,
+      color: ["red", "green", "yellow"],
+    };
+    var myBarChart = new Chart(barChartCanvas, {
+      type: "bar",
+      data: data,
+    });
 
-  const websiteData = [
-    {
-      domain: "google.com",
-      time: 2365362623,
-      limit: 325362623632622,
-    },
-    {
-      domain: "linkedin.com",
-      time: 3532623236,
-      limit: 353252335,
-    },
-  ];
-  const websiteUrl = [];
-  const websiteTime = [];
-  for (let i = 0; i < websiteData.length; i++) {
-    websiteUrl[i] = websiteData[i].domain;
-    websiteTime[i] = websiteData[i].time;
-  }
-  const data = {
-    datasets: [
-      {
-        data: websiteTime,
-      },
-    ],
-    // These labels appear in the legend and in the tooltips when hovering different arcs
-    labels: websiteUrl,
-    color: ["red", "green", "yellow"],
-  };
-  var myDoughnutChart = new Chart(ctx, {
-    type: "doughnut",
-    data: data,
+    var myPieChart = new Chart(pieChartCanvas, {
+      type: "doughnut",
+      data: data,
+    });
   });
 });

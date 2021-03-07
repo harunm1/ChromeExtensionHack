@@ -4,50 +4,98 @@ let activeTabInfo = "";
 let startTime = 0;
 let endTime = 0;
 
-const ongoingUrls = [];
-const tabMap = {};
+let openTabs = [];
+let tabIdUrlMap = {};
 
 chrome.tabs.onActivated.addListener((tab) => {
   chrome.tabs.get(tab.tabId, (currentTabInfo) => {
     activeTabId = tab.tabId;
     activeTabInfo = currentTabInfo;
 
-    populateTabMap(currentTabInfo.tabId, currentTabInfo.url);
+    chrome.tabs.getAllInWindow(null, (tabs) => {
+      openTabs = tabs;
+      console.log(openTabs);
+    });
+
+    populateTabIdUrlMap(tab.tabId, currentTabInfo.url);
     startTimer(currentTabInfo, tab.tabId);
   });
 });
 
 chrome.tabs.onRemoved.addListener((tabId, removeInfo) => {
-  for (let i = ongoingUrls.length - 1; i > 0; i--) {
-    console.log(ongoingUrls[i].url, "ongoing url");
-    console.log(tabMap[tabId], "tab ID");
-    if (ongoingUrls[i].url === tabMap[tabId]) {
-      const currentTime = Date.now();
-      const elapsedTime = currentTime - ongoingUrls[i].startTime;
+  const endTime = Date.now();
+  const domain = tabIdUrlMap[tabId];
+  chrome.storage.local.get(domain, (obj) => {
+    const timeElapsed = endTime - obj[domain].startTime;
 
-      chrome.storage.local.set(
-        { productivityData: [{ domain: ongoingUrls[i].url, elapsedTime }] },
-        (data) => {
-          console.log(data, "what is this data");
-        }
-      );
-      ongoingUrls.splice(i, 1);
-    }
-  }
-  console.log(ongoingUrls, "ongoing urls");
+    chrome.storage.local.set({
+      [domain]: {
+        isDomain: true,
+        activeTab: false,
+        startTime: 0,
+        image: obj[domain].image,
+        duration: obj[domain].duration + timeElapsed,
+      },
+    });
+    // execute when tab is closed
+  });
 });
 
-const populateTabMap = (tabId, url) => {
-  tabMap[tabId] = getDomain(url);
-  console.log(tabMap[tabId], "setting tabMap");
+chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
+  chrome.tabs.getAllInWindow(null, (tabs) => {
+    openTabs = tabs;
+    console.log(openTabs);
+  });
+});
+
+const populateTabIdUrlMap = (tabId, url) => {
+  tabIdUrlMap[tabId] = getDomain(url);
 };
 
 const startTimer = (currentTabInfo, tabId) => {
-  const tabStartTime = Date.now();
-  ongoingUrls.push({
-    url: getDomain(currentTabInfo.url),
-    tabId: tabId,
-    startTime: startTime,
+  let tabStartTime = Date.now();
+  const domain = getHostName(currentTabInfo.url);
+  chrome.storage.local.get(domain, (obj) => {
+    if (Object.entries(obj).length === 0 && obj.constructor === Object) {
+      //if this is the first time user has visited domain
+      addNewDomain(domain, tabStartTime, currentTabInfo.favIconUrl);
+    } else {
+      if (obj[domain].activeTab == true) {
+        const currentTime = Date.now();
+        const timeElapsed = currentTime - obj[domain].startTime;
+        chrome.storage.local.set({
+          [domain]: {
+            isDomain: true,
+            activeTab: true,
+            startTime: tabStartTime,
+            image: currentTabInfo.favIconUrl,
+            duration: obj[domain].duration + timeElapsed,
+          },
+        });
+      } else {
+        chrome.storage.local.set({
+          [domain]: {
+            isDomain: true,
+            activeTab: true,
+            startTime: tabStartTime,
+            image: currentTabInfo.favIconUrl,
+            duration: obj[domain].duration,
+          },
+        });
+      }
+    }
+  });
+};
+
+const addNewDomain = (domain, tabStartTime, image) => {
+  chrome.storage.local.set({
+    [domain]: {
+      isDomain: true,
+      activeTab: true,
+      startTime: tabStartTime,
+      image: image,
+      duration: 0,
+    },
   });
 };
 
@@ -82,11 +130,3 @@ function getHostName(url) {
     return null;
   }
 }
-
-// const tabIdListener = chrome.tabs.onUpdated.addListener(
-//   (tabId, changeInfo, tab) => {
-//     console.log(tabId, "tabID");
-//     console.log(changeInfo, "changeInfo");
-//     console.log(tab, "Tab");
-//   }
-// );
