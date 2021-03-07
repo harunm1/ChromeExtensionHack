@@ -12,25 +12,35 @@
 </head>
 
 
-<body style="width: 600px;height: 500px;">
+<body style="width: 500px;height: 500px;">
 
     <h1 class="text-center">Productivity Tracker</h1>
     <p id="domainlabels"></p>
     <p id="domaindurations"></p>
     <div class="container">
         <div class="row">
-            <div class="col-4">
-                <a href="../popup/popup.html">Pie Chart</a>
+            <div class="col-4 navigation">
+                <div class="text-center ">
+                    <a href="../popup/popup.html">Pie Chart</a>
+                </div>
             </div>
-            <div class="col-4">
-                <a href="../line-chart/line-chart.html">Line Chart</a>
+
+            <div class="col-4 navigation">
+                <div class=" text-center ">
+                    <a href="../line-chart/line-chart.html">Line Chart</a>
+                </div>
             </div>
-            <div class="col-4">
-                <a href="../timers/timers.html">Timers</a>
+
+            <div class="col-4 navigation">
+                <div class="text-center ">
+                    <a href="../timers/timers.html">Timers</a>
+                </div>
             </div>
+
         </div>
     </div>
-    <div class="d-flex justify-content-center">
+
+    <div class="d-flex justify-content-center mt-4">
         <div class="chart-container" style="position: relative; height:400px; width:500px">
             <canvas id="pieChart"></canvas>
         </div>
