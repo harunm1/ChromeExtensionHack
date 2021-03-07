@@ -1,40 +1,31 @@
 document.addEventListener("DOMContentLoaded", () => {
+  const domainLabels = [];
+  const domainDurations = [];
   chrome.storage.local.get(null, function (obj) {
-    document.getElementById("password").innerHTML = JSON.stringify(obj);
-  });
-  // test: display the data in Storage
-  chrome.storage.local.get(null, (value) => {
-    console.log(value)
-  });
 
+    Object.keys(obj).forEach((key) => {
+      if (obj[key].isDomain === true) {
+        domainLabels.push(key);
+        domainDurations.push(obj[key].duration);
+      }
+    });
 
-  var ctx = document.getElementById("myChart").getContext("2d");
-  // And for a doughnut chart
-
-  const websiteData = [
-    {
-      domain: "google.com",
-      time: 1000,
-      limit: 325362623632622,
-    },
-    {
-      domain: "linkedin.com",
-      time: 1000,
-      limit: 353252335,
-    },
-
-    {
-      domain: "twitter.com",
-      time: 1000,
-      limit: 353252335,
-    },
-  ];
-  const websiteUrl = [];
-  const websiteTime = [];
-  for (let i = 0; i < websiteData.length; i++) {
-    websiteUrl[i] = websiteData[i].domain.slice(0,-4).toUpperCase();
-    websiteTime[i] = new Date(websiteData[i].time);
-  }
+    const barChartCanvas = document.getElementById("barChart").getContext("2d");
+    const pieChartCanvas = document.getElementById("pieChart").getContext("2d");
+    const data = {
+      datasets: [
+        {
+          data: domainDurations,
+        },
+      ],
+      // These labels appear in the legend and in the tooltips when hovering different arcs
+      labels: domainLabels,
+      color: ["red", "green", "yellow"],
+    };
+    var myBarChart = new Chart(barChartCanvas, {
+      type: "bar",
+      data: data,
+    });
 
   //auto generate color
 
@@ -71,5 +62,9 @@ document.addEventListener("DOMContentLoaded", () => {
     options: {
   }
     
+    var myPieChart = new Chart(pieChartCanvas, {
+      type: "doughnut",
+      data: data,
+    });
   });
 });
