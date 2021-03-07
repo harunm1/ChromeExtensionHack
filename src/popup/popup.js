@@ -56,11 +56,13 @@ document.addEventListener("DOMContentLoaded", () => {
         maintainAspectRatio: false,
       },
     });
+    const noDataMessage = document.getElementById("no-data");
 
     if (domainLabels.length === 0) {
-      const noDataMessage = document.getElementById("no-data");
       noDataMessage.innerHTML = "Start visiting websites to see data.";
       document.getElementById("chart-container").style.display = "none";
+    } else {
+      noDataMessage.style.display = "none";
     }
   });
 });
