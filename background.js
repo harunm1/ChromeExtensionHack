@@ -49,10 +49,12 @@ chrome.tabs.onRemoved.addListener((tabId, removeInfo) => {
 });
 
 chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
+  console.log(tab, "changeInfo");
   chrome.tabs.getAllInWindow(null, (tabs) => {
     openTabs = tabs;
     console.log(openTabs);
   });
+  startTimer(tab, tabId);
 });
 
 const populateTabIdUrlMap = (tabId, url) => {
