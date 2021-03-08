@@ -14,13 +14,13 @@ document.addEventListener("DOMContentLoaded", () => {
   chrome.storage.local.get(null, function (obj) {
     Object.keys(obj).forEach((key) => {
       if (obj[key].isDomain === true && key != "null") {
-        const d = new Date(0);
-        d.setUTCSeconds(obj[key].startTime);
         domainLabels.push(key);
         domainDurations.push(
           parseFloat(obj[key].duration / 60000).toFixed(2) + " mins"
         );
         domainImages.push(obj[key].image);
+
+        const d = new Date(obj[key].startTime);
         domainLastAccessed.push(d);
       }
     });
